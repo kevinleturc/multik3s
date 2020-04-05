@@ -1,0 +1,20 @@
+# not used
+kind: Cluster
+spec:
+  nodes:
+  - name: coruscant
+    master: true
+    resources:
+      cpu: 1
+      memory: 1G
+      disk: 50G
+  - name: endor
+    resources:
+      cpu: 1
+      memory: 1G
+      disk: 5G
+  - name: tatooine
+    resources:
+      cpu: 1
+      memory: 1G
+      disk: 5G
