@@ -43,7 +43,7 @@ testCommand() {
 testDirectory() {
   directory=$1
 
-  directory_exist=$([ -d "/path/to/dir" ] 1>&5 2>&5 && echo 1 || echo 0)
+  directory_exist=$([ -d "${directory}" ] 1>&5 2>&5 && echo 1 || echo 0)
   logDot "${directory}" "${directory_exist}"
 }
 
