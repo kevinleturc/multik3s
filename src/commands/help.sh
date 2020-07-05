@@ -27,6 +27,7 @@ help() {
   info "    -v               : increase verbosity level (can be repeated: -vv, -vvv)"
   info ""
   info "Commands:"
+  info "    exec             : execute a command with multik3s configuration"
   info "    delete           : delete a cluster resource"
   info "    doctor           : check if multik3s is initialized correctly"
   info "    help             : display this help message"

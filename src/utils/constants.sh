@@ -17,7 +17,7 @@
 
 local_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd )"
 
-declare -a multik3s_supported_commands=(delete doctor help init kubectl start stop)
+declare -a multik3s_supported_commands=(exec delete doctor help init kubectl start stop)
 
 multik3s_configuration_dir="${HOME}/.multik3s"
 

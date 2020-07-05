@@ -20,7 +20,7 @@ source "${multik3s_dir:-${local_dir}/..}/utils/constants.sh"
 source "${multik3s_dir:-${local_dir}/..}/utils/logging.sh"
 source "${multik3s_dir:-${local_dir}/..}/lib/configuration.sh"
 
-kubectlWrapped() {
+execWrapped() {
   cluster="default"
 
   if [[ "$(readConfigurationConditionStatus "${cluster}" "Initialized")" != "True" ]]; then
@@ -36,7 +36,7 @@ kubectlWrapped() {
       || die "Unable to get k3s.yaml" 3
     sed -i '' "s/127.0.0.1/$(readConfigurationMasterIp "${cluster}")}/" "${k3s_file}"
   fi
-  KUBECONFIG="${k3s_file}" kubectl "$@"
+  KUBECONFIG="${k3s_file}" "$@"
 }
 
-kubectlWrapped "$@"
+execWrapped "$@"
