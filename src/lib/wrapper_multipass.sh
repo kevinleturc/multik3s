@@ -20,6 +20,24 @@ source "${multik3s_dir:-${local_dir}/..}/utils/constants.sh"
 source "${multik3s_dir:-${local_dir}/..}/utils/logging.sh"
 source "${multik3s_dir:-${local_dir}/..}/lib/configuration.sh"
 
+multipassDelete() {
+  cluster=$1
+  name=$2
+
+  debug "Delete cluster node: ${name}"
+
+  multipass delete "${name}" 2>&5
+  result=$?
+  if [[ "${result}" == "0" ]]; then
+    debug "Cluster node: ${name} deleted"
+    deleteConfigurationNodeStatus "${cluster}" "${name}"
+  else
+    warn "Unable to delete cluster node: ${name}"
+    writeConfigurationNodeStatus "${cluster}" "${name}" "Started" "Error"
+  fi
+  return $result
+}
+
 multipassInfoIpv4() {
   name=$1
 

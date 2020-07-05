@@ -19,6 +19,7 @@ local_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd )"
 source "${multik3s_dir:-${local_dir}/..}/utils/constants.sh"
 source "${multik3s_dir:-${local_dir}/..}/utils/logging.sh"
 source "${multik3s_dir:-${local_dir}/..}/lib/configuration.sh"
+source "${multik3s_dir:-${local_dir}/..}/lib/wrapper_multipass.sh"
 
 delete() {
   type=$1 # only cluster is currently handled
@@ -33,15 +34,15 @@ delete() {
 
     agent_names=($(readConfigurationAgentName "${cluster}"))
     for agent_name in "${agent_names[@]}"; do
-      multipass delete "${agent_name}" 2>&5
+      multipassDelete "${cluster}" "${agent_name}"
     done
 
     master_name=$(readConfigurationMasterName "${cluster}")
-    multipass delete "${master_name}" 2>&5
-    multipass purge
+    multipassDelete "${cluster}" "${master_name}"
+    multipass purge 2>&5
     deleteConfigurationStatus "${cluster}"
 
-    info "Cluster: ${cluster} stopped"
+    info "Cluster: ${cluster} deleted"
   else
     die "Unknown object: ${type}" 2
   fi

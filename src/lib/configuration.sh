@@ -51,6 +51,13 @@ deleteConfigurationStatus() {
     && rm "$(_getK3sConfigurationFile "${cluster}")"
 }
 
+deleteConfigurationNodeStatus() {
+  cluster=$1
+  node_name=$2 # full name with multik3s prefix
+
+  yq delete -i "$(_getConfigurationFile "${cluster}")" "status.nodeStatuses.${node_name}" 2>&5
+}
+
 readConfiguration() {
   cluster=$1
 
