@@ -8,13 +8,32 @@ Requirements:
 - [yq](https://mikefarah.gitbook.io/yq/)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
-To start a [K3s](https://github.com/rancher/k3s) cluster with [multipass](https://github.com/canonical/multipass), just type:
+Once the requirements are installed, just clone this repository somewhere on your computer and add an alias to `multik3s` script, such as below:
+
 ```bash
-bash multik3s.sh init
+alias multik3s='bash /PATH/TO/REPOSITORY/src/multik3s.sh
 ```
-if succeed and after a moment all nodes should be available, to check their statuses:
+
+To start a [K3s](https://github.com/rancher/k3s) cluster with [multipass](https://github.com/canonical/multipass), just type:
+
 ```bash
-bash multik3s.sh kubectl top node
+multik3s init
+```
+
+if succeed and after a moment all nodes should be available, to check their statuses:
+
+```bash
+multik3s kubectl top node
+```
+
+This has created a _default_ cluster with specification from [cluster template](./src/templates/cluster.yaml).
+
+To interract with your cluster, you can grab the k8s configuration file under `~/.multik3s/cluster_default_k3s.yaml` or use the exec feature:
+
+```bash
+multik3s kubectl get pod
+multik3s exec kubectl get pod
+multik3s exec helm delete --purge release
 ```
 
 Content of this CLI code is grandly inspired from:
